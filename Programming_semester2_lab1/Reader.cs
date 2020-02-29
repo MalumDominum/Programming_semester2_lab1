@@ -7,11 +7,11 @@ using System.IO;
 
 namespace Programming_semester2_lab1
 {
-    class ReaderWriter
+    class Reader
     {
-        public List<List<string>> List { get; }
-        public int Size { get; }
-        public ReaderWriter(string path)
+        private List<List<string>> List { get; }
+        private int Size { get; }
+        public Reader(string path)
         {
             using StreamReader sr = new StreamReader(path, System.Text.Encoding.Default);
             string line;
@@ -20,15 +20,15 @@ namespace Programming_semester2_lab1
             while ((line = sr.ReadLine()) != null)
                 List.Add((line.Split(',')).ToList());
         }
-        public Country[] ParseStringsToCountries(ReaderWriter strings)
+        public Country[] ParseStringsToCountries()
         {
-            Country[] countries = new Country[strings.Size];
-            for (int i = 0; i < strings.Size; i++)
+            Country[] countries = new Country[this.Size];
+            for (int i = 0; i < this.Size; i++)
             {
-                string name = strings.List[i][0];
+                string name = this.List[i][0];
                 int[] vote = new int[20];
                 for (int j = 0; j < 20; j++)
-                    vote[j] = Convert.ToInt32(strings.List[i][j + 1]);
+                    vote[j] = Convert.ToInt32(this.List[i][j + 1]);
                 Country country = new Country(name, vote);
                 countries[i] = country;
             }
