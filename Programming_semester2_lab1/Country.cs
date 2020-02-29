@@ -8,16 +8,29 @@ namespace Programming_semester2_lab1
 {
     class Country
     {
-        public string CountryName { get; }
+        public string Name { get; }
         public int[] Vote { get; }
-        public int FinalVote { get; }
+        public int SumVote { get; }
         public int Score { get; }
         public Country(string countryName, int[] vote)
         {
-            CountryName = countryName;
+            Name = countryName;
             Vote = vote;
             foreach (int element in vote)
-                FinalVote += element;
+                SumVote += element;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Country: " + this.Name);
+            Console.Write("Votes: ");
+            for (int i = 0; i < this.Vote.Length; i++)
+            {
+                Console.Write("{0,7}", this.Vote[i]);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Sum Votes: " + SumVote);
+            Console.WriteLine();
         }
     }
 }
