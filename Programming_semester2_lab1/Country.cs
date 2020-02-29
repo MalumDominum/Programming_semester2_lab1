@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace Programming_semester2_lab1
             Console.WriteLine("Sum Votes: " + this.SumVote);
             Console.WriteLine("Score: " + this.Score + "\n");
         }
-        public Country[] ProcessVotes(Country[] countries)
+        public static Country[] ProcessVotes(Country[] countries)
         {
             for (int i = 0; i < countries.Length; i++)
             {
@@ -64,6 +65,16 @@ namespace Programming_semester2_lab1
             }
 
             return countries;
+        }
+
+        public static void WriteIntoFile(string writePath, Country[] countries)
+        {
+            using StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default);
+            sw.WriteLine("Country,SumVotes,Score");
+            foreach (var country in countries)
+            {
+                sw.WriteLine(country.Name + "," + country.SumVote + "," + country.Score);
+            }
         }
     }
 }

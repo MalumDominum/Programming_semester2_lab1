@@ -12,11 +12,14 @@ namespace Programming_semester2_lab1
         static void Main(string[] args)
         {
             string[] pathList = Directory.GetFiles(@"C:\Users\mihai\Source\repos\laba2programming\tests", "*.csv");
+            string writePath = @"C:\Users\mihai\Source\repos\Programming_semester2_lab1\Out_File.csv";
+            using (FileStream fs = File.Create(writePath)) { }
+
             foreach (var path in pathList)
             {
                 Reader reader = new Reader(path);
                 Country[] countries = reader.ParseStringsToCountries();
-                countries = countries[0].ProcessVotes(countries);
+                countries = Country.ProcessVotes(countries);
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("Path to File: ");
                 Console.WriteLine(path + "\n");
@@ -25,7 +28,10 @@ namespace Programming_semester2_lab1
                 {
                     country.ShowInfo();
                 }
+
+                Country.WriteIntoFile(writePath, countries);
             }
+
             Console.ReadKey();
         }
     }
