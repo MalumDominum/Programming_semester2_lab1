@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Programming_semester2_lab1
 {
@@ -13,9 +10,13 @@ namespace Programming_semester2_lab1
         {
             string[] pathList = Directory.GetFiles(@"C:\Users\mihai\Source\repos\laba2programming\tests", "*.csv");
             string writePath = @"C:\Users\mihai\Source\repos\Programming_semester2_lab1\Out_File.csv";
-            using (FileStream fs = File.Create(writePath)) { }
+            using (FileStream fs = File.Create(writePath)) // создаем файл с предварительной разметкой столбцов
+            {
+                byte[] info = new UTF8Encoding(true).GetBytes("Country,SumVotes,Score\n");
+                fs.Write(info, 0, info.Length);
+            }
 
-            foreach (var path in pathList)
+            foreach (var path in pathList) // проходимся по всем файлам *.csv
             {
                 Reader reader = new Reader(path);
                 Country[] countries = reader.ParseStringsToCountries();

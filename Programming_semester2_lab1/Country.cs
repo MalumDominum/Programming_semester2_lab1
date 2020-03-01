@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Programming_semester2_lab1
 {
@@ -36,7 +32,7 @@ namespace Programming_semester2_lab1
         }
         public static Country[] ProcessVotes(Country[] countries)
         {
-            for (int i = 0; i < countries.Length; i++)
+            for (int i = 0; i < countries.Length; i++) // сортировка по значению SumVote
             {
                 int maxIndex = i;
                 for (int j = i + 1; j < countries.Length; j++)
@@ -47,11 +43,10 @@ namespace Programming_semester2_lab1
                     Country temp = countries[i];
                     countries[i] = countries[maxIndex];
                     countries[maxIndex] = temp;
-
                 }
 
             }
-            for (int k = 0; k < countries.Length; k++)
+            for (int k = 0; k < countries.Length; k++) // Выдача странам значения Score
             {
                 if (k == 0)
                     countries[k].Score = 12;
@@ -61,7 +56,6 @@ namespace Programming_semester2_lab1
 
                 else if (k <= 9)
                     countries[k].Score = 10 - k;
-
             }
 
             return countries;
@@ -70,7 +64,6 @@ namespace Programming_semester2_lab1
         public static void WriteIntoFile(string writePath, Country[] countries)
         {
             using StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default);
-            sw.WriteLine("Country,SumVotes,Score");
             foreach (var country in countries)
             {
                 sw.WriteLine(country.Name + "," + country.SumVote + "," + country.Score);
