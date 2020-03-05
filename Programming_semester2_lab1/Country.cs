@@ -18,7 +18,7 @@ namespace Programming_semester2_lab1
             Vote = vote;
             Scores = new int[size];
             List<int> list = new List<int>(vote);
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
             for (int i = 0; i < vote.Length; i++)
             {
                 int maxIndex = 0;
@@ -31,32 +31,17 @@ namespace Programming_semester2_lab1
                         maxElement = list[j];
                     }
                 }
-                dictionary.Add(maxIndex, maxElement);
+                if (i == 0)
+                    Scores[Array.IndexOf(vote, maxElement)] = 12;
+
+                else if (i == 1)
+                    Scores[Array.IndexOf(vote, maxElement)] = 10;
+
+                else if (i <= 9)
+                    Scores[Array.IndexOf(vote, maxElement)] = 10 - i;
+
+
                 list.RemoveAt(maxIndex);
-            }
-            for (int i = 0; i < vote.Length; i++)
-            {
-                int maxIndex = i;
-                for (int j = i + 1; j < vote.Length; j++)
-                    if (vote[j] > vote[maxIndex])
-                        maxIndex = j;
-                if (i != maxIndex)
-                {
-                    var temp = vote[i];
-                    vote[i] = vote[maxIndex];
-                    vote[maxIndex] = temp;
-                }
-            }
-            for (int k = 0; k < vote.Length; k++)
-            {
-                if (k == 0)
-                    Scores[k] = 12;
-
-                else if (k == 1)
-                    Scores[k] = 10;
-
-                else if (k <= 9)
-                    Scores[k] = 10 - k;
             }
         }
 
@@ -68,21 +53,33 @@ namespace Programming_semester2_lab1
             foreach (var element in this.Vote)
                 Console.Write("{0,7}", element);
             Console.WriteLine();
-            Console.Write("Scores: ");
+            Console.Write("Scores:");
             foreach (var score in Scores)
             {
-                Console.Write(score + " ");
+                Console.Write("{0,7}", score);
             }
             Console.WriteLine();
             Console.WriteLine("Final Score: " + FinalScore + "\n");
         }
-        /*public static Country[] ProcessVotes(Country[] countries)
+        public static Country[] ProcessVotes(Country[] countries)
         {
-            for (int i = 0; i < countries.Length; i++) // сортировка по значению SumVote
+            for (int i = 0; i < countries.Length; i++)
+            {
+                for (int j = 0; j < countries.Length; j++)
+                {
+                    countries[j].FinalScore += countries[i].Scores[j];
+                }
+            }
+
+            return countries;
+        }
+        public static void WriteIntoFile(string writePath, Country[] countries)
+        {
+            for (int i = 0; i < countries.Length; i++)
             {
                 int maxIndex = i;
                 for (int j = i + 1; j < countries.Length; j++)
-                    if (countries[j].SumVote > countries[maxIndex].SumVote)
+                    if (countries[j].FinalScore > countries[maxIndex].FinalScore)
                         maxIndex = j;
                 if (i != maxIndex)
                 {
@@ -90,30 +87,12 @@ namespace Programming_semester2_lab1
                     countries[i] = countries[maxIndex];
                     countries[maxIndex] = temp;
                 }
-
             }
-            for (int k = 0; k < countries.Length; k++) // Выдача странам значения Score
+            using StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default);
+            foreach (var country in countries)
             {
-                if (k == 0)
-                    countries[k].Score = 12;
-                
-                else if (k == 1)
-                    countries[k].Score = 10;
-
-                else if (k <= 9)
-                    countries[k].Score = 10 - k;
+                sw.WriteLine(country.Name + "," + country.FinalScore);
             }
-
-            return countries;
-        }*/
-
-//        public static void WriteIntoFile(string writePath, Country[] countries)
-//        {
-//            using StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default);
-//            foreach (var country in countries)
-//            {
-//                sw.WriteLine(country.Name + "," + country.SumVote + "," + country.Score);
-//            }
-//        }
+        }
     }
 }

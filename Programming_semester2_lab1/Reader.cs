@@ -8,7 +8,7 @@ namespace Programming_semester2_lab1
     class Reader
     {
         private List<List<string>> List { get; }
-        public int Size { get; }
+        private int Size { get; }
         public Reader(string[] paths)
         {
             List = new List<List<string>>();
